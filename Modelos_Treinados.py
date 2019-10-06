@@ -9,6 +9,7 @@ import os
 
 """método que trata os dados , motivo: a conversão do arquivo para string possui \n e não usar o replace
 uma vez que remove os espaços em branco""" 
+
 def trata_dados(codigo):
     retorno = ''
     for cod in codigo.splitlines():
@@ -56,17 +57,12 @@ def kmeans_treinado():
     X_train = count_vector.fit_transform(dados['Codigo'])
     y_train = dados['Linguagem']
     
-    rfc = RandomForestClassifier()
 
     km = KMeans()
     sup = svm.SVC(C=1, gamma="auto")
     sup.fit(X_train,y_train)
-    rfc.fit(X_train,y_train)
-    codigo = ["import Cliente from 'Models.js'; import Produto from 'Venda.js'; function novoCliente(saldo){ var cliente = new Cliente(); cliente.Saldo = saldo; cliente.PodeComprar = (Produto.Valor - cliente) > 0 ? true:false return cliente;}"]
-    
     codigo = count_vector.transform(codigo)
 
-    print(sup.predict(codigo))
 
 def svm_treinado():
     dados = obter_dados()
@@ -78,3 +74,12 @@ def svm_treinado():
     sup.fit(X_train,y_train)
     
     return {'vetor':count_vector,'modelo':sup}
+
+def random_forest_treinado():
+    dados = obter_dados()
+    count_vector = CountVectorizer()
+    X_train = count_vector.fit_transform(dados['Codigo'])
+    y_train = dados['Linguagem']
+    rdc = RandomForestClassifier()
+    rdc.fit(X_train,y_train)
+    return {'vetor':count_vector,'modelo':rdc}
