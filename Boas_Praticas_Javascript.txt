@@ -1,0 +1,21 @@
+Boas práticas para Javascript retirada do site: https://code.tutsplus.com/pt/tutorials/24-javascript-best-practices-for-beginners--net-5399
+
+1- Evitar ao máximo variáveis do tipo global var
+2- Use === Ao Invés de ==
+3- Não Use Abreviações (Sem ponto e vírgula ou chaves)
+    if(someVariableExists)
+        x = false
+4- Declare Variáveis, Fora da Instrução For
+5- Reduza as Variáveis Globais
+    var a = 'variavel a';
+    var b = 'variavel b'; 
+    RUIM
+    var variaveis = {
+        a: 'variavel a',
+        b: 'variavel b'
+    }
+    BOM !
+6- Use {} Ao Invés de New Object()
+7- Use [] Ao Invés de New Array()
+8- Tem Uma Longa Lista de Variáveis? Omita a Palavra-Chave "var" e Passe a Usar Vírgulas
+    var teste="abc",teste2="def",teste3="ghi";

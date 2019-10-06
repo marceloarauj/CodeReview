@@ -1,0 +1,285 @@
+Boas Práticas em C# retirado do site da Microsoft: https://docs.microsoft.com/pt-br/dotnet/csharp/programming-guide/inside-a-program/coding-conventions
+
+1-Uso de diretivas muito grandes pode ser quebrada após um ponto
+
+Ex: var currentPerformanceCounterCategory = new System.Diagnostics.
+        PerformanceCounterCategory();
+
+2-Gravar apenas uma instrução por linha.
+
+3-Gravar apenas uma declaração por linha.
+
+4-Se as linhas de continuação não devem recuar automaticamente, recue-as uma tabulação (quatro espaços).
+
+5-Adicione pelo menos uma linha em branco entre as definições de método e de propriedade.
+
+6-Coloque o comentário em uma linha separada, não no final de uma linha de código.
+
+7-Comece o texto do comentário com uma letra maiúscula.
+
+8-Termine o texto do comentário com um ponto final.
+
+9-Insira um espaço entre o delimitador de comentário (/ /) e o texto do comentário, conforme mostrado no exemplo a seguir.
+
+Use a digitação implícita para variáveis locais quando o tipo da variável for óbvio do lado direito da atribuição ou quando o tipo exato não for importante.
+C#
+
+Copiar
+// When the type of a variable is clear from the context, use var 
+// in the declaration.
+var var1 = "This is clearly a string.";
+var var2 = 27;
+var var3 = Convert.ToInt32(Console.ReadLine());
+Não use var quando o tipo não estiver aparente no lado direito da atribuição.
+C#
+
+Copiar
+// When the type of a variable is not clear from the context, use an
+// explicit type.
+int var4 = ExampleClass.ResultSoFar();
+Não se baseie no nome da variável para especificar o tipo dela. Ele pode não estar correto.
+C#
+
+Copiar
+// Naming the following variable inputInt is misleading. 
+// It is a string.
+var inputInt = Console.ReadLine();
+Console.WriteLine(inputInt);
+Evite o uso de var em vez de dynamic.
+Use a digitação implícita para determinar o tipo da variável de loop nos loops for e foreach.
+O exemplo a seguir usa digitação implícita em uma instrução for.
+C#
+
+Copiar
+var phrase = "lalalalalalalalalalalalalalalalalalalalalalalalalalalalalala";
+var manyPhrases = new StringBuilder();
+for (var i = 0; i < 10000; i++)
+{
+    manyPhrases.Append(phrase);
+}
+//Console.WriteLine("tra" + manyPhrases);
+O exemplo a seguir usa digitação implícita em uma instrução foreach.
+C#
+
+Copiar
+foreach (var ch in laugh)
+{
+    if (ch == 'h')
+        Console.Write("H");
+    else
+        Console.Write(ch);
+}
+Console.WriteLine();
+Tipo de Dados Sem Sinal
+Em geral, use int em vez de tipos sem assinatura. O uso de int é comum em todo o C#, e é mais fácil interagir com outras bibliotecas ao usar int.
+Matrizes
+Use a sintaxe concisa ao inicializar matrizes na linha da declaração.
+C#
+
+Copiar
+// Preferred syntax. Note that you cannot use var here instead of string[].
+string[] vowels1 = { "a", "e", "i", "o", "u" };
+
+
+// If you use explicit instantiation, you can use var.
+var vowels2 = new string[] { "a", "e", "i", "o", "u" };
+
+// If you specify an array size, you must initialize the elements one at a time.
+var vowels3 = new string[5];
+vowels3[0] = "a";
+vowels3[1] = "e";
+// And so on.
+Delegados
+Use a sintaxe concisa ao criar instâncias de um tipo delegado.
+C#
+
+Copiar
+// First, in class Program, define the delegate type and a method that  
+// has a matching signature.
+
+// Define the type.
+public delegate void Del(string message);
+
+// Define a method that has a matching signature.
+public static void DelMethod(string str)
+{
+    Console.WriteLine("DelMethod argument: {0}", str);
+}
+C#
+
+Copiar
+// In the Main method, create an instance of Del.
+
+// Preferred: Create an instance of Del by using condensed syntax.
+Del exampleDel2 = DelMethod;
+
+// The following declaration uses the full syntax.
+Del exampleDel1 = new Del(DelMethod);
+try-catch e instruções de uso no tratamento de exceção
+Use uma instrução try-catch para a maioria da manipulação de exceções.
+C#
+
+Copiar
+static string GetValueFromArray(string[] array, int index)
+{
+    try
+    {
+        return array[index];
+    }
+    catch (System.IndexOutOfRangeException ex)
+    {
+        Console.WriteLine("Index is out of range: {0}", index);
+        throw;
+    }
+}
+Simplifique o código usando a instrução using do #C. Se você tiver uma instrução try-finally na qual o único código do bloco finally é uma chamada para o método Dispose, use, em vez disso, uma instrução using.
+C#
+
+Copiar
+// This try-finally statement only calls Dispose in the finally block.
+Font font1 = new Font("Arial", 10.0f);
+try
+{
+    byte charset = font1.GdiCharSet;
+}
+finally
+{
+    if (font1 != null)
+    {
+        ((IDisposable)font1).Dispose();
+    }
+}
+
+
+// You can do the same thing with a using statement.
+using (Font font2 = new Font("Arial", 10.0f))
+{
+    byte charset = font2.GdiCharSet;
+}
+Operadores && e ||
+Para evitar exceções e aumentar o desempenho ignorando comparações desnecessárias, use && em vez de & e || em vez de | ao executar comparações, conforme mostrado no exemplo a seguir.
+C#
+
+Copiar
+Console.Write("Enter a dividend: ");
+var dividend = Convert.ToInt32(Console.ReadLine());
+
+Console.Write("Enter a divisor: ");
+var divisor = Convert.ToInt32(Console.ReadLine());
+
+// If the divisor is 0, the second clause in the following condition
+// causes a run-time error. The && operator short circuits when the
+// first expression is false. That is, it does not evaluate the
+// second expression. The & operator evaluates both, and causes 
+// a run-time error when divisor is 0.
+if ((divisor != 0) && (dividend / divisor > 0))
+{
+    Console.WriteLine("Quotient: {0}", dividend / divisor);
+}
+else
+{
+    Console.WriteLine("Attempted division by 0 ends up here.");
+}
+Operador New
+Use um formulário conciso de instanciação de objeto com digitação implícita, conforme mostrado na declaração a seguir.
+C#
+
+Copiar
+var instance1 = new ExampleClass();
+A linha anterior é equivalente à declaração a seguir.
+C#
+
+Copiar
+ExampleClass instance2 = new ExampleClass();
+Use inicializadores de objeto para simplificar a criação do objeto.
+C#
+
+Copiar
+// Object initializer.
+var instance3 = new ExampleClass { Name = "Desktop", ID = 37414, 
+    Location = "Redmond", Age = 2.3 };
+
+// Default constructor and assignment statements.
+var instance4 = new ExampleClass();
+instance4.Name = "Desktop";
+instance4.ID = 37414;
+instance4.Location = "Redmond";
+instance4.Age = 2.3;
+Tratamento de Evento
+Se você estiver definindo um manipulador de eventos que não necessita ser removido posteriormente, use uma expressão lambda.
+C#
+
+Copiar
+public Form2()
+{
+    // You can use a lambda expression to define an event handler.
+    this.Click += (s, e) =>
+        {
+            MessageBox.Show(
+                ((MouseEventArgs)e).Location.ToString());
+        };
+}
+C#
+
+Copiar
+// Using a lambda expression shortens the following traditional definition.
+public Form1()
+{
+    this.Click += new EventHandler(Form1_Click);
+}
+
+void Form1_Click(object sender, EventArgs e)
+{
+    MessageBox.Show(((MouseEventArgs)e).Location.ToString());
+}
+Membros Estáticos
+Chame membros estáticos usando o nome de classe: ClassName.StaticMember. Essa prática torna o código mais legível, tornando o acesso estático limpo. Não qualifique um membro estático definido em uma classe base com o nome de uma classe derivada. Enquanto esse código é compilado, a leitura do código fica incorreta e o código poderá ser danificado no futuro se você adicionar um membro estático com o mesmo nome da classe derivada.
+Consultas LINQ
+Use nomes significativos para variáveis de consulta. O exemplo a seguir usa seattleCustomers para os clientes que estão localizados em Seattle.
+C#
+
+Copiar
+var seattleCustomers = from customer in customers
+                       where customer.City == "Seattle"
+                       select customer.Name;
+Use aliases para se certificar de que os nomes de propriedades de tipos anônimos sejam colocados corretamente em maiúsculas, usando o padrão Pascal-Case.
+C#
+
+Copiar
+var localDistributors =
+    from customer in customers
+    join distributor in distributors on customer.City equals distributor.City
+    select new { Customer = customer, Distributor = distributor };
+Renomeie propriedades quando os nomes de propriedades no resultado forem ambíguos. Por exemplo, se a sua consulta retornar um nome de cliente e uma ID de distribuidor, em vez de deixá-los como Name e ID no resultado, renomeie-os para esclarecer que Name é o nome de um cliente, e ID é a identificação de um distribuidor.
+C#
+
+Copiar
+var localDistributors2 =
+    from customer in customers
+    join distributor in distributors on customer.City equals distributor.City
+    select new { CustomerName = customer.Name, DistributorID = distributor.ID };
+Usa a digitação implícita na declaração de variáveis de consulta e de intervalo.
+C#
+
+Copiar
+var seattleCustomers = from customer in customers
+                       where customer.City == "Seattle"
+                       select customer.Name;
+Alinhe cláusulas de consulta na cláusula from, conforme mostrado nos exemplos anteriores.
+Use cláusulas where antes de outras cláusulas de consulta para garantir que cláusulas de consulta posteriores operem no conjunto de dados filtrado e reduzido.
+C#
+
+Copiar
+var seattleCustomers2 = from customer in customers
+                        where customer.City == "Seattle"
+                        orderby customer.Name
+                        select customer;
+Use várias cláusulas from em vez de uma cláusula join para acessar coleções internas. Por exemplo, cada coleção de objetos Student pode conter um conjunto de pontuações no teste. Quando a próxima consulta for executada, ela retorna cada pontuação que seja acima de 90, juntamente com o sobrenome do estudante que recebeu a pontuação.
+C#
+
+Copiar
+// Use a compound from to access the inner sequence within each element.
+var scoreQuery = from student in students
+                 from score in student.Scores
+                 where score > 90
+                 select new { Last = student.LastName, score };

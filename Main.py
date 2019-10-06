@@ -2,11 +2,13 @@ import Modelos_Treinados
 from sklearn.feature_extraction.text import CountVectorizer
   
 
-svm = Modelos_Treinados.random_forest_treinado()
-codigo = ['using']
-codigo = svm['vetor'].transform(codigo)
 
-print(svm['modelo'].predict(codigo))
+def classificador_de_linguagem():
+    svm = Modelos_Treinados.random_forest_treinado()
+    codigo = ['using']
+    codigo = svm['vetor'].transform(codigo)
 
-def identificacao_da_linguagem():
-    print("A")
+    print(svm['modelo'].predict(codigo))
+
+def classificador_de_padrao(linguagem):
+    
