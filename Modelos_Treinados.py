@@ -66,7 +66,6 @@ def kmeans_treinado():
 
 def svm_treinado():
     dados = obter_dados()
-
     count_vector = CountVectorizer()
     X_train = count_vector.fit_transform(dados['Codigo'])
     y_train = dados['Linguagem']
@@ -83,3 +82,6 @@ def random_forest_treinado():
     rdc = RandomForestClassifier()
     rdc.fit(X_train,y_train)
     return {'vetor':count_vector,'modelo':rdc}
+
+def gerar_csv():
+    obter_dados().to_excel(r'C:/Users/Marcelo/Desktop/database_ia/Codigos.xlsx',encoding='utf-8')
