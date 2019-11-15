@@ -13,4 +13,4 @@ def classificador_de_linguagem():
 def classificador_de_padrao(linguagem):
     print('Em desenvolvimento')
 
-#classificador_de_linguagem()
+classificador_de_linguagem()
