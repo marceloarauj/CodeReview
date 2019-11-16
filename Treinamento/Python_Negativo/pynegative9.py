@@ -1,0 +1,6 @@
+hentai = __builtins__.__import__("re")
+porn = __builtins__.__import__("sys")
+exec("vars()['lol'] = raw_input('Operacao: ')")
+eval("porn.stdout.write(str(reduce(lambda x, y: x %s y, [float(n) for n in hentai.search(hentai.compile('(\d{1,99}) *?([\+|\-|\*|\/]) 
+*?(\d{1,99})'), vars()['lol']).groups() if n.isdigit()])))" % hentai.search(hentai.compile('(\d{1,99}) *?([\+|\-|\*|\/]) *?(\d{1,99})'), vars()
+['lol']).groups()[1])

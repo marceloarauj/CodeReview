@@ -25,25 +25,18 @@ def obter_dados():
         arquivos = os.listdir("Treinamento/"+str(linguagem))
         diretorio = "Treinamento/"+str(linguagem) + "/"
 
-        if(linguagem == 'Csharp'):
-            for arquivo in arquivos:
-                arquivo_csharp = open(str(diretorio)+str(arquivo))
-                dados['Codigo'].append((trata_dados(arquivo_csharp.read())))
-                dados['Linguagem'].append(1)
-                arquivo_csharp.close()
-                
-        if(linguagem == 'Javascript'):
-            for arquivo in arquivos:
-                arquivo_javascript = open(str(diretorio)+str(arquivo))
-                dados['Codigo'].append((trata_dados(arquivo_javascript.read())))
-                dados['Linguagem'].append(2)
-                arquivo_javascript.close()
-
-        if(linguagem == 'Python'):
+        if(linguagem == 'Python_Negativo'):
             for arquivo in arquivos:
                 arquivo_python = open(str(diretorio)+str(arquivo))
                 dados['Codigo'].append(trata_dados((arquivo_python.read())))
-                dados['Linguagem'].append(3)
+                dados['Linguagem'].append(0)
+                arquivo_python.close()
+
+        if(linguagem == 'Python_Positivo'):
+            for arquivo in arquivos:
+                arquivo_python = open(str(diretorio)+str(arquivo))
+                dados['Codigo'].append(trata_dados((arquivo_python.read())))
+                dados['Linguagem'].append(1)
                 arquivo_python.close()
         
     data = pd.DataFrame(dados)
@@ -84,4 +77,5 @@ def random_forest_treinado():
     return {'vetor':count_vector,'modelo':rdc}
 
 def gerar_csv():
-    obter_dados().to_excel(r'C:/Users/Marcelo/Desktop/database_ia/Codigos.xlsx',encoding='utf-8')
+    excel = obter_dados()
+    excel.to_excel(r'C:/Users/Marcelo/Desktop/database_ia/Codigos.xlsx')
