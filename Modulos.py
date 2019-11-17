@@ -9,6 +9,7 @@ def importa_modulos():
         subprocess.call([sys.executable,"-m","pip","install","scipy"])
         subprocess.call([sys.executable,"-m","pip","install","seaborn"])
         subprocess.call([sys.executable,"-m","pip","install","openpyxl"])
+        subprocess.call([sys.executable,"-m","pip","install","random-word"])
 
     except:
         print("ERRO NA INSTALAÇÃO DE MÓDULOS")
